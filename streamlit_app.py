@@ -8,18 +8,13 @@ st.title("Smoothie Ordering App")
 
 st.write("Choose the fruits you want in your smoothie!")
 smoothiefroot_response = requests.get(
-    "https://my.smoothiefroot.com/api/fruit/ximenia"
+    "https://my.smoothiefroot.com/api/fruit/Ximenia%20americana"
 )
 
 smoothiefroot_data = smoothiefroot_response.json()
-st.write("Fruit API Response:")
-st.json(smoothiefroot_data)
-
-smoothiefroot_data = smoothiefroot_response.json()
 
 st.write("Fruit API Response:")
 st.json(smoothiefroot_data)
-
 session = Session.builder.configs(
     st.secrets["connections"]["snowflake"]
 ).create()
