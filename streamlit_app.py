@@ -7,9 +7,6 @@ from snowflake.snowpark.functions import col
 st.title("Smoothie Ordering App")
 
 st.write("Choose the fruits you want in your smoothie!")
-smoothiefroot_response = requests.get(
-    "https://my.smoothiefroot.com/api/fruit/all"
-)
 
 smoothiefroot_data = smoothiefroot_response.json()
 
@@ -44,8 +41,22 @@ ingredients_list = st.multiselect(
 name_on_order = st.text_input("Name on order:")
 
 # Display selected ingredients
-if ingredients_list:
-    st.write("Your selected ingredients:", ingredients_list)
+    for fruit_chosen in ingredients_list:
+        search_on = fruit_names_pd_df.loc[
+            fruit_names_pd_df["FRUIT_NAME"] == fruit_chosen,
+            "SEARCH_ON"
+        ].iloc[0]
+
+        st.write("API search name:", search_on)
+
+        smoothiefroot_response = requests.get(
+            f"https://my.smoothiefroot.com/api/fruit/{search_on}"
+        )
+
+        smoothiefroot_data = smoothiefroot_response.json()
+
+        st.write(f"Fruit details for {fruit_chosen}:")
+        st.json(smoothiefroot_data)
 
     # Convert the list into a string
     ingredients_string = ""
