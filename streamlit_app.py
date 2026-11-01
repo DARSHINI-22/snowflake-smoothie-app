@@ -11,7 +11,10 @@ smoothiefroot_response = requests.get(
     "https://my.smoothiefroot.com/api/fruit/watermelon"
 )
 
-st.write(smoothiefroot_response)
+smoothiefroot_data = smoothiefroot_response.json()
+
+st.write("Fruit API Response:")
+st.json(smoothiefroot_data)
 
 session = Session.builder.configs(
     st.secrets["connections"]["snowflake"]
