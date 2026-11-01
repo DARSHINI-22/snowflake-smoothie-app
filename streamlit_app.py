@@ -41,7 +41,14 @@ ingredients_list = st.multiselect(
 name_on_order = st.text_input("Name on order:")
 
 # Display selected ingredients
+if ingredients_list:
+    st.write("Your selected ingredients:", ingredients_list)
+
+    ingredients_string = ""
+
     for fruit_chosen in ingredients_list:
+        ingredients_string += fruit_chosen + ", "
+
         search_on = fruit_names_pd_df.loc[
             fruit_names_pd_df["FRUIT_NAME"] == fruit_chosen,
             "SEARCH_ON"
@@ -50,7 +57,7 @@ name_on_order = st.text_input("Name on order:")
         st.write("API search name:", search_on)
 
         smoothiefroot_response = requests.get(
-            f"https://my.smoothiefroot.com/api/fruit/{search_on}"
+            f"https://my.smoothiefroot.com/api/fruit/{requests.utils.quote(search_on)}"
         )
 
         smoothiefroot_data = smoothiefroot_response.json()
@@ -58,14 +65,7 @@ name_on_order = st.text_input("Name on order:")
         st.write(f"Fruit details for {fruit_chosen}:")
         st.json(smoothiefroot_data)
 
-    # Convert the list into a string
-    ingredients_string = ""
-
-    for fruit_chosen in ingredients_list:
-        ingredients_string += fruit_chosen + ", "
-
     ingredients_string = ingredients_string.rstrip(", ")
-
     st.write("Ingredients string:", ingredients_string)
 
 # Submit the order
