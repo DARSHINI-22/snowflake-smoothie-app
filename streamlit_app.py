@@ -8,10 +8,7 @@ st.title("Smoothie Ordering App")
 
 st.write("Choose the fruits you want in your smoothie!")
 
-smoothiefroot_data = smoothiefroot_response.json()
 
-st.write("Available fruits in API:")
-st.json(smoothiefroot_data)
 session = Session.builder.configs(
     st.secrets["connections"]["snowflake"]
 ).create()
