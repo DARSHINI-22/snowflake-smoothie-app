@@ -1,13 +1,15 @@
 
 import streamlit as st
-from snowflake.snowpark.context import get_active_session
+from snowflake.snowpark import Session
 from snowflake.snowpark.functions import col
 
 st.title("Smoothie Ordering App")
 
 st.write("Choose the fruits you want in your smoothie!")
 
-session = get_active_session()
+session = Session.builder.configs(
+    st.secrets["connections"]["snowflake"]
+).create()
 
 # Get fruit names from the FRUIT_OPTIONS table
 fruit_names_df = session.table(
