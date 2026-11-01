@@ -8,8 +8,12 @@ st.title("Smoothie Ordering App")
 
 st.write("Choose the fruits you want in your smoothie!")
 smoothiefroot_response = requests.get(
-    "https://my.smoothiefroot.com/api/fruit/watermelon"
+    "https://my.smoothiefroot.com/api/fruit/ximenia"
 )
+
+smoothiefroot_data = smoothiefroot_response.json()
+st.write("Fruit API Response:")
+st.json(smoothiefroot_data)
 
 smoothiefroot_data = smoothiefroot_response.json()
 
