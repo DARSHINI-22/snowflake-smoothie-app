@@ -22,11 +22,16 @@ session = Session.builder.configs(
 # Get fruit names from the FRUIT_OPTIONS table
 fruit_names_df = session.table(
     "SMOOTHIES.PUBLIC.FRUIT_OPTIONS"
-).select(col("FRUIT_NAME"))
+).select(
+    col("FRUIT_NAME"),
+    col("SEARCH_ON")
+)
 
 fruit_names_list = [
     row["FRUIT_NAME"] for row in fruit_names_df.collect()
 ]
+
+fruit_names_pd_df = fruit_names_df.to_pandas()
 
 # Allow users to select ingredients
 ingredients_list = st.multiselect(
